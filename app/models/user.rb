@@ -6,4 +6,5 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   has_many :reviews, dependent: :destroy
+  has_many :movies, through:  :reviews
 end
