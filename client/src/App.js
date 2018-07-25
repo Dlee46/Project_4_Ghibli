@@ -4,7 +4,7 @@ import SignUp from './components/SignUp'
 import LogIn from './components/LogIn'
 import axios from 'axios'
 import MoviesList from './components/MoviesList';
-import { saveAuthTokens } from './utils/SessionHeaderUtil';
+import { saveAuthTokens, clearAuthTokens, userIsLoggedIn, setAxiosDefaults } from './utils/SessionHeaderUtil';
 
 class App extends Component {
   state = {
@@ -14,12 +14,14 @@ class App extends Component {
   }
   async componentDidMount() {
     try {
+      const signedIn = userIsLoggedIn()
       let movies = []
-      if (this.state.signedIn) {
+      if (signedIn) {
+        setAxiosDefaults()
         movies = await this.getMovies()
       }
       this.setState({
-        movies
+        movies, signedIn
       })
     } catch (error) {
       console.error(error)
@@ -63,9 +65,7 @@ class App extends Component {
       }
       const res = await axios.post('/auth/sign_in', payload)
       saveAuthTokens(res.headers)
-      const movies = await this.getMovies()
       this.setState({
-        movies,
         signedIn: true
       })
 
@@ -74,9 +74,20 @@ class App extends Component {
     }
   }
 
-  signOut = async(event) = {
+  signOut = async (event) => {
+    try {
+      event.preventDefault()
 
+      await axios.delete('/auth/sign_out')
+
+      clearAuthTokens();
+
+      this.setState({ signedIn: false })
+    } catch (error) {
+      console.log(error)
+    }
   }
+
 
   render() {
 
@@ -92,6 +103,9 @@ class App extends Component {
       <MoviesList
         movies={this.state.movies} />
     )
+    // const ReviewsComponent = () => (
+
+    // )
 
     return (
       <Router>
@@ -101,6 +115,7 @@ class App extends Component {
             <Route exact path="/signup" render={SignUpComponent} />
             <Route exact path="/login" render={LogInComponent} />
             <Route exact path="/movies" render={MoviesComponent} />
+            {/* <Route exact path='/movies/:id/reviews' render={ReviewsComponent} /> */}
           </Switch>
           {this.state.signedIn ? <Redirect to="/movies" /> : null}
         </div>

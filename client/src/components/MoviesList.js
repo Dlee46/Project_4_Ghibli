@@ -1,17 +1,40 @@
-import React from 'react';
-import Movie from './Movie';
-
-const MoviesList = (props) => {
-    const movies = props.movies.map((movie) => {
+import React, { Component } from 'react';
+import axios from 'axios'
+class MoviesList extends Component {
+    state = {
+        movies: []
+    }
+    async componentDidMount() {
+        try {
+            let movies = []
+            // if (this.props.signedIn) {
+            movies = await this.getMovies()
+            // }
+            this.setState({
+                movies
+            })
+        } catch (error) {
+            console.error(error)
+        }
+    }
+    getMovies = async () => {
+        try {
+            const res = await axios.get('/api/movies/')
+            console.log("FETCH", res)
+            return res.data
+        } catch (error) {
+            console.error(error)
+            return []
+        }
+    }
+    render() {
+        
         return (
-            <Movie {...movie} key={movie.id} />
-        )
-    })
-    return (
-        <div>
-            {movies}
-        </div>
-    )
+            <div>
+                Hello World
+            </div>
+        );
+    }
 }
 
 export default MoviesList;
