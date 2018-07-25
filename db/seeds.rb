@@ -5,3 +5,30 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+User.destroy_all
+Movie.destroy_all
+Review.destroy_all
+
+blah = User.create(
+    name: "Test", 
+    nickname: "Tester", 
+    image: "https://st2.depositphotos.com/1104517/11967/v/950/depositphotos_119675554-stock-illustration-male-avatar-profile-picture-vector.jpg",
+    email: "test@blah.com", 
+    password: "blahblah", 
+    password_confirmation: "blahblah")
+
+movie1 = Movie.create(
+    title: "Castle in the Sky", 
+    description: "The orphan Sheeta inherited a mysterious crystal that links her to the mythical sky-kingdom of Laputa. With the help of resourceful Pazu and a rollicking band of sky pirates, she makes her way to the ruins of the once-great civilization. Sheeta and Pazu must outwit the evil Muska, who plans to use Laputa's science to make himself ruler of the world.", 
+    director: "Hayao Miyazaki", 
+    producer: "Isao Takahata", 
+    release_date: "1986", 
+    rating: "95"
+    )
+
+review1 = blah.reviews.create(
+    user_id:blah.id, 
+    movie_id:movie1.id, 
+    title: "Best Movie of the Year!",
+    review: "A Star Wars-like animated feature about a legendary city behind the clouds and the many secrets it holds about nature, robots, light, and magic."
+    )

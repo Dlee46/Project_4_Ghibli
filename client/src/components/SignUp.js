@@ -13,6 +13,9 @@ class SignUp extends Component {
     signUp = (event) => {
         event.preventDefault()
         this.props.signUp(
+            this.state.name,
+            this.state.nickname,
+            this.state.image,
             this.state.email,
             this.state.password,
             this.state.password_confirmation
