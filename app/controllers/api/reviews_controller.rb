@@ -2,7 +2,7 @@ class Api::ReviewsController < ApplicationController
     before_action :authenticate_user!
 
   def index
-    @reviews = Review.find(params[:movie_id]).reviews
+    @reviews = Movie.find(params[:movie_id]).reviews
 
     render json: @reviews
   end

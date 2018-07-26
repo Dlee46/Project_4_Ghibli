@@ -3,8 +3,10 @@ import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-d
 import SignUp from './components/SignUp'
 import LogIn from './components/LogIn'
 import axios from 'axios'
-import MoviesList from './components/MoviesList';
+import MoviesList from './components/MoviesList'
 import { saveAuthTokens, clearAuthTokens, userIsLoggedIn, setAxiosDefaults } from './utils/SessionHeaderUtil';
+import Movie from './components/Movie';
+import ReviewList from './components/ReviewList';
 
 class App extends Component {
   state = {
@@ -30,7 +32,6 @@ class App extends Component {
   getMovies = async () => {
     try {
       const res = await axios.get('/api/movies/')
-      console.log("FETCH", res)
       return res.data
     } catch (error) {
       console.error(error)
@@ -99,25 +100,27 @@ class App extends Component {
       <LogIn
         signIn={this.signIn} />
     )
-    const MoviesComponent = () => (
-      <MoviesList
-        movies={this.state.movies} />
-    )
-    // const ReviewsComponent = () => (
 
+    const MoviesComponent = (props) => (
+      <MoviesList {...props} movies={this.state.movies} signOut={this.state.signOut} signedIn={this.state.signedIn} />
+    )
+    const MovieComponent = (props) => (
+      <Movie {...props} movies={this.state.movies} signOut={this.state.signOut} signedIn={this.state.signedIn} />
+    )
+    // const ReviewsComponent = (props) => (
+    // <ReviewList {...props} reviews={this.state.reviews} movies={this.state.movies} />
     // )
 
     return (
       <Router>
         <div>
           <Switch>
-
+            <Route exact path="/" render={MoviesComponent} />
             <Route exact path="/signup" render={SignUpComponent} />
             <Route exact path="/login" render={LogInComponent} />
-            <Route exact path="/movies" render={MoviesComponent} />
-            {/* <Route exact path='/movies/:id/reviews' render={ReviewsComponent} /> */}
+            <Route exact path="/movies/:id/reviews" render={MovieComponent} />
+            {/* <Route exact path='/movies/:movieId/reviews/:id' render={ReviewsComponent} /> */}
           </Switch>
-          {this.state.signedIn ? <Redirect to="/movies" /> : null}
         </div>
       </Router>
     )
