@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import { setAxiosDefaults } from '../utils/SessionHeaderUtil'
+import { Link } from 'react-router-dom'
 
 class ReviewList extends Component {
     state = {
-        movies: [],
         reviews: []
     }
+
     async componentDidMount() {
         try {
             let reviews = []
@@ -23,7 +24,6 @@ class ReviewList extends Component {
         try {
             const movieId = this.props.match.params.id
             const res = await axios.get(`/api/movies/${movieId}/reviews`)
-            console.log(res.data)
             return res.data
         } catch (error) {
             console.error(error)
@@ -31,21 +31,31 @@ class ReviewList extends Component {
         }
     }
     render() {
-        console.log("Review", this.state)
         const reviews = this.state.reviews
-        console.log("Review", reviews)
+        const movieId = this.props.match.params.id
         const review = reviews.map((review) => {
             return (
                 <div key={review.id}>
-                    {review.title}
-                    {review.review}
+                    <Link to={`/movies/${movieId}/reviews/${review.id}`}><h4>{review.title}</h4></Link>
+                    <h4>{review.review}</h4>
                 </div>
             )
         })
         return (
             <div>
-                <h2>Reviews</h2>
-                {review}
+                <div>
+                    <h2>Reviews</h2>
+                    {review}
+                </div>
+                <div>
+                    <form onSubmit={}>
+                        <label htmlFor="title">Title:</label>
+                        <input type="string" name="title" onChange={} />
+                        <textarea name="review" onChange={} cols="30" rows="10"></textarea>
+                        <button>Review</button>
+                    </form>
+                </div>
+
             </div>
         );
     }

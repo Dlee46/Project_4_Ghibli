@@ -5,37 +5,27 @@ import ReviewList from './ReviewList';
 
 class Movie extends Component {
     state = {
-        movies: [],
+        movie: {},
         reviews: []
     }
     async componentDidMount() {
         try {
-            let reviews = []
-            let movies = []
+            let movie = {}
             setAxiosDefaults()
-            movies = await this.getMovies()
+            movie = await this.getMovie()
             this.setState({
-                movies,
-                reviews
+                movie
             })
         } catch (error) {
             console.error(error)
         }
     }
-    getReviews = async () => {
+
+    getMovie = async () => {
         try {
             const movieId = this.props.match.params.id
-            const res = await axios.get(`/api/movies/${movieId}/reviews`)
-            return res.data
-        } catch (error) {
-            console.error(error)
-            return []
-        }
-    }
-    getMovies = async () => {
-        try {
-            // const movieId = this.props.match.params.id
-            const res = await axios.get(`/api/movies/`)
+            console.log(movieId)
+            const res = await axios.get(`/api/movies/${movieId}`)
             return res.data
         } catch (error) {
             console.error(error)
@@ -45,41 +35,23 @@ class Movie extends Component {
     handleChange = (event) => {
         const inputField = event.target.name
         const newValue = event.target.value
-        const movies = [...this.state.movies]
-        movies[this.props.index][inputField] = newValue
-        this.setState({ movies })
+        const movie = { ...this.state.movie }
+        movie[inputField] = newValue
+        this.setState({ movie })
     }
     handleSubmit = (event) => {
         event.preventDefault()
-        let newImage = this.state.movies
+        let updatedMovie = this.state.movie
         const movieId = this.props.match.params.id
-        axios.patch(`/api/cities/${movieId}/`, newImage)
+        axios.patch(`/api/movies/${movieId}/`, updatedMovie)
             .then((res) => {
-                this.this.setState({
+                this.setState({
                     movies: res.data
                 })
             })
     }
     render() {
-        const movies = this.state.movies
-        const movie = movies.map((movie) => {
-            return (
-                <div key={movie.id}>
-                    <h1>{movie.title}</h1>
-                    <img src={movie.image} alt={movie.title} />
-                    <h3>{movie.director}</h3>
-                    <h3>{movie.producer}</h3>
-                    <h3>{movie.release_date}</h3>
-                    <h3>{movie.rating}</h3>
-                    <h3>{movie.specie}</h3>
-                    <h3>{movie.location}</h3>
-                    <h3>{movie.vehicle}</h3>
-                    <ul>
-                        <li><h5>{movie.people}</h5></li>
-                    </ul>
-                </div>
-            )
-        })
+        const movie = this.state.movie
         return (
             <div>
                 {this.props.signedIn ? <button onClick={this.signOut}>Sign Out</button>
@@ -93,7 +65,21 @@ class Movie extends Component {
                         <button>Add</button>
                     </form>
                 </div>
-                {movie}
+                <div>
+                    <h1>{movie.title}</h1>
+                    <img src={movie.image} alt={movie.title} />
+                    <h3>Director: {movie.director}</h3>
+                    <h3>Producer: {movie.producer}</h3>
+                    <h3>Release Date: {movie.release_date}</h3>
+                    <h3>Rating: {movie.rating}</h3>
+                    <h3>Species: {movie.specie}</h3>
+                    <h3>Location: {movie.location}</h3>
+                    <h3>Vehicles: {movie.vehicle}</h3>
+
+                    <h3>Characters:</h3>
+                    <li><h5>{movie.people}</h5></li>
+
+                </div>
                 <div>
                     <ReviewList {...this.props} reviews={this.state.reviews} />
                 </div>

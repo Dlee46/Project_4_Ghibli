@@ -7,6 +7,7 @@ import MoviesList from './components/MoviesList'
 import { saveAuthTokens, clearAuthTokens, userIsLoggedIn, setAxiosDefaults } from './utils/SessionHeaderUtil';
 import Movie from './components/Movie';
 import ReviewList from './components/ReviewList';
+import Review from './components/Review';
 
 class App extends Component {
   state = {
@@ -107,9 +108,9 @@ class App extends Component {
     const MovieComponent = (props) => (
       <Movie {...props} movies={this.state.movies} signOut={this.state.signOut} signedIn={this.state.signedIn} />
     )
-    // const ReviewsComponent = (props) => (
-    // <ReviewList {...props} reviews={this.state.reviews} movies={this.state.movies} />
-    // )
+    const ReviewsComponent = (props) => (
+      <Review {...props} movies={this.state.movies} />
+    )
 
     return (
       <Router>
@@ -119,7 +120,7 @@ class App extends Component {
             <Route exact path="/signup" render={SignUpComponent} />
             <Route exact path="/login" render={LogInComponent} />
             <Route exact path="/movies/:id/reviews" render={MovieComponent} />
-            {/* <Route exact path='/movies/:movieId/reviews/:id' render={ReviewsComponent} /> */}
+            <Route exact path='/movies/:movieId/reviews/:id' render={ReviewsComponent} />
           </Switch>
         </div>
       </Router>
