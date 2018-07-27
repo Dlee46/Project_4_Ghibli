@@ -23,12 +23,13 @@ class Api::MoviesController < ApplicationController
         render json: @movie.errors, status: :unprocessable_entity
       end 
     end
-  
+
     def update
-      @movie = Movie.find(params[:id])
+      @user = current_user
+      @movie = @user.movies.find(params[:id])
   
   
-      if @movie.update(movie_params)
+      if @movie.update!(movie_params)
         render json: @movie
       else
         render json: @movie.errors, status: :unprocessable_entity
@@ -45,6 +46,6 @@ class Api::MoviesController < ApplicationController
     private
   
     def movie_params
-      params.require(:movie).permit(:title, :image, :director, :producer, :release_date, :rating, :description).merge(user_id: current_user.id)
+      params.require(:movie).permit(:title, :image, :director, :producer, :release_date, :rating, :description)
     end
 end

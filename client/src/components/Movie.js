@@ -47,9 +47,10 @@ class Movie extends Component {
         const movieId = this.props.match.params.id
         axios.patch(`/api/movies/${movieId}/`, updatedMovie)
             .then((res) => {
-                this.setState({
-                    movies: res.data
-                })
+                console.log("HI", res.data)
+                // this.setState({
+                //     movies: res.data
+                // })
             })
     }
     render() {

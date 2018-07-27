@@ -27,9 +27,7 @@ class ReviewList extends Component {
             .then((res) => {
                 const reviews = [...this.state.reviews]
                 reviews.push(res.data)
-                this.setState({reviews})
-                
-                // this.setState({ reviews: res.data })
+                this.setState({ reviews })
             })
     }
     async componentDidMount() {
