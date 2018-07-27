@@ -24,14 +24,13 @@ class Api::ReviewsController < ApplicationController
 
   def update
     @user = current_user
-    @review = Review.find(params[:id])
-
-
-    if @review.update(review_params)
-      render json: @review
-    else
-      render json: @review.errors, status: :unprocessable_entity
-    end
+    @movies = @user.movies.find(params[:movie_id])
+    @review = @movies.reviews.find(params[:id])
+    puts "ORIGINAL review " + @review.title
+    puts "NEW TITLE " + params[:review][:title]
+    updateSuccess = @review.update!(review_params)
+    puts "UPDATED review " + @review.title
+    render json: @review
   end
 
   def destroy

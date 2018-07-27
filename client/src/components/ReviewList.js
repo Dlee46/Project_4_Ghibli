@@ -2,20 +2,12 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import { setAxiosDefaults } from '../utils/SessionHeaderUtil'
 import { Link } from 'react-router-dom'
-import EditReview from './EditReview';
 
 class ReviewList extends Component {
     state = {
         reviews: [],
-        showEdit: false,
         newTitle: '',
         newComment: ''
-    }
-    handleToggle = () => {
-        const editPost = !this.state.showEdit
-        this.setState({
-            showEdit: editPost
-        })
     }
     handleChange = (event) => {
         const newState = { ...this.state }
@@ -76,7 +68,6 @@ class ReviewList extends Component {
                     <Link to={`/movies/${movieId}/reviews/${review.id}`}><h4>{review.title}</h4></Link>
                     <h4>{review.comment}</h4>
                     <button onClick={() => this.deleteComment(review.id)}>X</button>
-                    {this.state.showEdit ? <EditReview review={review} {...this.props} {...this.showEdit} /> : <button onClick={this.handleToggle}>Edit</button>}
                 </div>
             )
         })

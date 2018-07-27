@@ -36,6 +36,7 @@ class Api::MoviesController < ApplicationController
     end
   
     def destroy
+      @user = current_user
       @movie = Movie.find(params[:id]).delete
   
       render status: :ok
@@ -44,6 +45,6 @@ class Api::MoviesController < ApplicationController
     private
   
     def movie_params
-      params.require(:movie).permit(:title, :image, :director, :producer, :release_date, :rating, :description)
+      params.require(:movie).permit(:title, :image, :director, :producer, :release_date, :rating, :description).merge(user_id: current_user.id)
     end
 end
