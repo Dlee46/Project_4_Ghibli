@@ -7,6 +7,12 @@ class Review extends Component {
         review: {},
         showEdit: false
     }
+    handleToggle = () => {
+        const editPost = !this.state.showEdit
+        this.setState({
+            showEdit: editPost
+        })
+    }
     async componentDidMount() {
         try {
             let review = {}
@@ -53,20 +59,32 @@ class Review extends Component {
         const review = this.state.review
         return (
             <div>
-                {review.title}
-                {review.comment}
-                <div>
+                <button onClick={this.handleToggle}>
+                    {this.state.showEdit
+                        ? 'View'
+                        : 'Edit'
+                    }
+                </button>
+                {this.state.showEdit ?
+                    <div>
+                        {review.title}
+                        {review.comment}
+                    </div>
+                    :
+                    <div>
 
-                    <form onSubmit={this.handleEditSubmit}>
-                        <label htmlFor="title">Title:</label>
-                        <input type="string" name="title" defaultValue={review.title} onChange={this.handleEditChange} />
-                        <br />
-                        <textarea name="comment" placheholder={review.comment} onChange={this.handleEditChange} cols="100" rows="10"></textarea>
-                        <br />
-                        <button>Update</button>
-                    </form>
+                        <form onSubmit={this.handleEditSubmit}>
+                            <label htmlFor="title">Title:</label>
+                            <input type="string" name="title" defaultValue={review.title} onChange={this.handleEditChange} />
+                            <br />
+                            <textarea name="comment" placheholder={review.comment} onChange={this.handleEditChange} cols="100" rows="10"></textarea>
+                            <br />
+                            <button>Update</button>
+                        </form>
 
-                </div>
+                    </div>
+                }
+
             </div>
         );
     }
