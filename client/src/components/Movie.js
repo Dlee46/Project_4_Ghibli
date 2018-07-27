@@ -8,6 +8,9 @@ class Movie extends Component {
         movie: {},
         reviews: []
     }
+    goBack = () => {
+        this.props.history.goBack()
+    }
     async componentDidMount() {
         try {
             let movie = {}
@@ -53,6 +56,7 @@ class Movie extends Component {
         const movie = this.state.movie
         return (
             <div>
+                <button onClick={() => this.goBack()}> Back </button>
                 <div>
                     <label htmlFor="image">Add Image:</label>
                     <form onSubmit={this.handleSubmit}>

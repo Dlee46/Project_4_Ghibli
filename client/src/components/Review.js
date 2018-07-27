@@ -13,6 +13,9 @@ class Review extends Component {
             showEdit: editPost
         })
     }
+    goBack = () => {
+        this.props.history.goBack()
+    }
     async componentDidMount() {
         try {
             let review = {}
@@ -59,12 +62,8 @@ class Review extends Component {
         const review = this.state.review
         return (
             <div>
-                <button onClick={this.handleToggle}>
-                    {this.state.showEdit
-                        ? 'View'
-                        : 'Edit'
-                    }
-                </button>
+                <button onClick={() => this.goBack()}> Back </button>
+
                 {this.state.showEdit ?
                     <div>
                         {review.title}
