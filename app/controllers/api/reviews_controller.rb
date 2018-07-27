@@ -1,5 +1,6 @@
 class Api::ReviewsController < ApplicationController
     before_action :authenticate_user!
+    load_and_authorize_resource  only: [:destroy]
 
   def index
     @reviews = Movie.find(params[:movie_id]).reviews
@@ -22,6 +23,7 @@ class Api::ReviewsController < ApplicationController
   end
 
   def update
+    @user = current_user
     @review = Review.find(params[:id])
 
 
@@ -33,6 +35,7 @@ class Api::ReviewsController < ApplicationController
   end
 
   def destroy
+    @user = current_user
     @review = Review.find(params[:id]).delete
 
     render status: :ok
