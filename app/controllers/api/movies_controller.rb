@@ -37,7 +37,7 @@ class Api::MoviesController < ApplicationController
   
     def destroy
       @user = current_user
-      @movie = Movie.find(params[:id]).delete
+      @movie = Movie.find(params[:id]).destroy
   
       render status: :ok
     end

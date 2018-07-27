@@ -13,7 +13,7 @@ class SignUp extends Component {
             this.state.email,
             this.state.password,
             this.state.password_confirmation
-        ).then((res) => {
+        ).then(() => {
             return (
                 this.props.history.push(`/`)
             )

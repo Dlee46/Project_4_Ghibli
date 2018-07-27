@@ -25,7 +25,11 @@ class ReviewList extends Component {
         console.log(newReview)
         axios.post(`/api/movies/${movieId}/reviews`, newReview)
             .then((res) => {
-                this.setState({ reviews: res.data })
+                const reviews = [...this.state.reviews]
+                reviews.push(res.data)
+                this.setState({reviews})
+                
+                // this.setState({ reviews: res.data })
             })
     }
     async componentDidMount() {
