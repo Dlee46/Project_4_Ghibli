@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2018_07_24_205236) do
 
   create_table "reviews", force: :cascade do |t|
     t.string "title"
-    t.string "review"
+    t.string "comment"
     t.bigint "user_id"
     t.bigint "movie_id"
     t.datetime "created_at", null: false

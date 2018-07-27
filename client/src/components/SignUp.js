@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 
 class SignUp extends Component {
     state = {
-        name: '',
-        nickname: '',
-        image: '',
         email: '',
         password: '',
         password_confirmation: ''
@@ -13,13 +10,14 @@ class SignUp extends Component {
     signUp = (event) => {
         event.preventDefault()
         this.props.signUp(
-            this.state.name,
-            this.state.nickname,
-            this.state.image,
             this.state.email,
             this.state.password,
             this.state.password_confirmation
-        )
+        ).then((res) => {
+            return (
+                this.props.history.push(`/`)
+            )
+        })
     }
 
 
@@ -33,18 +31,6 @@ class SignUp extends Component {
         return (
             <div>
                 <form>
-                    <div>
-                        <label htmlFor="name">Name: </label>
-                        <input onChange={this.handleChange} type="text" name="name" value={this.state.name} />
-                    </div>
-                    <div>
-                        <label htmlFor="nickname">Nickname: </label>
-                        <input onChange={this.handleChange} type="text" name="nickname" value={this.state.nickname} />
-                    </div>
-                    <div>
-                        <label htmlFor="image">Image: </label>
-                        <input onChange={this.handleChange} type="text" name="image" value={this.state.image} />
-                    </div>
                     <div>
                         <label htmlFor="email">E-mail: </label>
                         <input onChange={this.handleChange} type="text" name="email" value={this.state.email} />

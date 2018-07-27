@@ -22,12 +22,17 @@ class MoviesList extends Component {
     getMovies = async () => {
         try {
             const res = await axios.get('/api/movies/')
-            console.log(res.data)
             return res.data
         } catch (error) {
             console.error(error)
             return []
         }
+    }
+    deleteMovie = (movieId) => {
+        setAxiosDefaults()
+        axios.delete(`/api/movies/${movieId}`).then((res) => {
+            this.setState({ movies: res.data })
+        })
     }
     render() {
         const movies = this.state.movies
@@ -35,6 +40,7 @@ class MoviesList extends Component {
             const movieId = `/movies/${movie.id}/reviews`
             return (
                 <div key={movie.id}>
+                    <button onClick={() => this.deleteMovie(movie.id)}>x</button>
                     <Link to={movieId} alt={movie.title} ><h1>{movie.title}</h1></Link>
                     <img src={movie.image} alt={movie.title} />
                     <h3>{movie.director}</h3>
@@ -44,8 +50,6 @@ class MoviesList extends Component {
         })
         return (
             <div>
-                {this.props.signedIn ? <button onClick={this.signOut}>Sign Out</button>
-                    : null}
                 {movie}
             </div >
         );

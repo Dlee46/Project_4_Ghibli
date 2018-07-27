@@ -11,7 +11,11 @@ class LogIn extends Component {
         this.props.signIn(
             this.state.email,
             this.state.password
-        )
+        ).then(() => {
+            return (
+                this.props.history.push(`/`)
+            )
+        })
     }
 
     handleChange = (event) => {

@@ -15,13 +15,10 @@ class Api::ReviewsController < ApplicationController
 
   def create
     @user = current_user
-    @review = @user.reviews.build(review_params)
+    @movies = @user.movies.find(params[:movie_id])
+    @review = @movies.reviews.create!(review_params)
 
-    if @user.save
-      render json: @review, status: :created, location: @review
-    else
-      render json: @review.errors, status: :unprocessable_entity
-    end
+    render json: @review
   end
 
   def update
@@ -44,7 +41,7 @@ class Api::ReviewsController < ApplicationController
   private
 
   def review_params
-    params.require(:review).permit(:title, :review)
+    params.require(:review).permit(:title, :comment).merge(user_id: current_user.id)
   end
 end
 

@@ -39,12 +39,9 @@ class App extends Component {
       return []
     }
   }
-  signUp = async (name, nickname, image, email, password, password_confirmation) => {
+  signUp = async (email, password, password_confirmation) => {
     try {
       const payload = {
-        name,
-        nickname,
-        image,
         email,
         password,
         password_confirmation
@@ -93,28 +90,33 @@ class App extends Component {
 
   render() {
 
-    const SignUpComponent = () => (
+    const SignUpComponent = (props) => (
       <SignUp
+        {...props}
         signUp={this.signUp} />
     )
-    const LogInComponent = () => (
+    const LogInComponent = (props) => (
       <LogIn
+        {...props}
         signIn={this.signIn} />
     )
 
     const MoviesComponent = (props) => (
-      <MoviesList {...props} movies={this.state.movies} signOut={this.state.signOut} signedIn={this.state.signedIn} />
+      <MoviesList {...props}
+        movies={this.state.movies} signOut={this.signOut} signedIn={this.state.signedIn} />
     )
     const MovieComponent = (props) => (
-      <Movie {...props} movies={this.state.movies} signOut={this.state.signOut} signedIn={this.state.signedIn} />
+      <Movie {...props} movies={this.state.movies} signOut={this.signOut} signedIn={this.state.signedIn} />
     )
     const ReviewsComponent = (props) => (
-      <Review {...props} movies={this.state.movies} />
+      <Review {...props} movies={this.state.movies} signOut={this.signOut} signedIn={this.state.signedIn} />
     )
 
     return (
       <Router>
         <div>
+          {this.state.signedIn ? <button onClick={this.signOut}>Sign Out</button>
+            : null}
           <Switch>
             <Route exact path="/" render={MoviesComponent} />
             <Route exact path="/signup" render={SignUpComponent} />

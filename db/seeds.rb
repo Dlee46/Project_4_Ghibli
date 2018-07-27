@@ -10,9 +10,6 @@ Movie.destroy_all
 Review.destroy_all
 
 blah = User.create(
-    name: "Test", 
-    nickname: "Tester", 
-    image: "https://st2.depositphotos.com/1104517/11967/v/950/depositphotos_119675554-stock-illustration-male-avatar-profile-picture-vector.jpg",
     email: "test@blah.com", 
     password: "blahblah", 
     password_confirmation: "blahblah")
@@ -30,5 +27,5 @@ review1 = blah.reviews.create(
     user_id:blah.id, 
     movie_id:movie1.id, 
     title: "Best Movie of the Year!",
-    review: "A Star Wars-like animated feature about a legendary city behind the clouds and the many secrets it holds about nature, robots, light, and magic."
+    comment: "A Star Wars-like animated feature about a legendary city behind the clouds and the many secrets it holds about nature, robots, light, and magic."
     )

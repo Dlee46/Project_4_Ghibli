@@ -24,7 +24,6 @@ class Movie extends Component {
     getMovie = async () => {
         try {
             const movieId = this.props.match.params.id
-            console.log(movieId)
             const res = await axios.get(`/api/movies/${movieId}`)
             return res.data
         } catch (error) {
@@ -54,8 +53,6 @@ class Movie extends Component {
         const movie = this.state.movie
         return (
             <div>
-                {this.props.signedIn ? <button onClick={this.signOut}>Sign Out</button>
-                    : null}
                 <div>
                     <label htmlFor="image">Add Image:</label>
                     <form onSubmit={this.handleSubmit}>
