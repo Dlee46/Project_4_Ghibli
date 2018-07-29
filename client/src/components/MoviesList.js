@@ -2,7 +2,18 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import { setAxiosDefaults } from '../utils/SessionHeaderUtil'
 import { Link } from 'react-router-dom'
-import { Button, Card, Image, Container } from 'semantic-ui-react'
+import { Button, Card, Image, Container, Segment } from 'semantic-ui-react'
+import styled from 'styled-components'
+
+const Background = styled.div`
+background-image: url('http://33.media.tumblr.com/891008a1c62d811c86b8406e1ce04e80/tumblr_nj5r0xB8N51rm75fro1_500.gif');
+background-repeat: no-repeat;
+background-size:270vh;
+height: 100vh;
+width: 100%;
+opacity: 0.8;
+overflow: scroll;
+`
 class MoviesList extends Component {
     state = {
         movies: [],
@@ -97,23 +108,24 @@ class MoviesList extends Component {
             )
         })
         return (
-            <Container>
-                <div>
-                    <input type="text"
-                        name="title"
-                        placeholder="Title"
-                        onChange={this.ghibliHandleChange} />
-                    <button onClick={this.getGhibliMovie}>Search</button>
-                </div>
-                <Card>
-                    <button onClick={this.addMovie}>Add Movie</button>
-                    <h1>Title: {ghibli.title}</h1>
-                    <h3>Did it Work? {ghibli.director}</h3>
-                </Card>
-                <Card.Group>
-                    {movie}
-                </Card.Group>
-            </Container >
+            <Background>
+                <Container>
+                    <Segment>
+                        <input type="text"
+                            name="title"
+                            placeholder="Title"
+                            onChange={this.ghibliHandleChange} />
+                        <Button onClick={this.getGhibliMovie}>Search</Button>
+                    </Segment>
+                    <Card onClick={this.addMovie}>
+                        <h1>Title: {ghibli.title}</h1>
+                        <h3>Did it Work? {ghibli.director}</h3>
+                    </Card>
+                    <Card.Group>
+                        {movie}
+                    </Card.Group>
+                </Container>
+            </Background>
         );
     }
 }

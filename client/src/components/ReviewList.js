@@ -82,10 +82,12 @@ class ReviewList extends Component {
         })
         return (
             <Container>
-                <Comment.Group>
-                    <Header>Reviews</Header>
-                    {review}
-                </Comment.Group>
+                <Segment>
+                    <Comment.Group>
+                        <Header>Reviews</Header>
+                        {review}
+                    </Comment.Group>
+                </Segment>
                 <Segment.Group>
                     <Segment>
                         <Form onSubmit={this.handleSubmit}>
