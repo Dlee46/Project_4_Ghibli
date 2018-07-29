@@ -48,7 +48,7 @@ class SignUp extends Component {
 
                     <Button onClick={this.signUp}>Sign Up</Button>
                 </Form>
-            </C>
+            </Container>
         )
     }
 }
