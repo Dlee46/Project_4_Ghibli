@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { setAxiosDefaults } from '../utils/SessionHeaderUtil'
 import axios from 'axios'
+import { Form, Button, Container, Label } from '../../../node_modules/semantic-ui-react';
 
 class Review extends Component {
     state = {
@@ -61,8 +62,8 @@ class Review extends Component {
     render() {
         const review = this.state.review
         return (
-            <div>
-                <button onClick={() => this.goBack()}> Back </button>
+            <Container>
+                <Button onClick={() => this.goBack()}> Back </Button>
 
                 {this.state.showEdit ?
                     <div>
@@ -72,19 +73,19 @@ class Review extends Component {
                     :
                     <div>
 
-                        <form onSubmit={this.handleEditSubmit}>
-                            <label htmlFor="title">Title:</label>
+                        <Form onSubmit={this.handleEditSubmit}>
+                            <Label htmlFor="title">Title:</Label>
                             <input type="string" name="title" defaultValue={review.title} onChange={this.handleEditChange} />
                             <br />
                             <textarea name="comment" placheholder={review.comment} onChange={this.handleEditChange} cols="100" rows="10"></textarea>
                             <br />
-                            <button>Update</button>
-                        </form>
+                            <Button>Update</Button>
+                        </Form>
 
                     </div>
                 }
 
-            </div>
+            </Container>
         );
     }
 }

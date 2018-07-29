@@ -8,17 +8,19 @@ import { saveAuthTokens, clearAuthTokens, userIsLoggedIn, setAxiosDefaults } fro
 import Movie from './components/Movie';
 import ReviewList from './components/ReviewList';
 import Review from './components/Review';
+import { Button } from '../../node_modules/semantic-ui-react';
 
 class App extends Component {
   state = {
     signedIn: false,
     movies: [],
-    reviews: []
+    ghibliMovies: []
   }
   async componentDidMount() {
     try {
       const signedIn = userIsLoggedIn()
       let movies = []
+      await this.getGhibliApi()
       if (signedIn) {
         setAxiosDefaults()
         movies = await this.getMovies()
@@ -87,9 +89,14 @@ class App extends Component {
     }
   }
 
+  getGhibliApi = () => {
+    axios.get(`https://ghibliapi.herokuapp.com/films/`)
+      .then((res) => {
+        this.setState({ ghibliMovies: res.data })
+      })
 
+  }
   render() {
-
     const SignUpComponent = (props) => (
       <SignUp
         {...props}
@@ -103,7 +110,7 @@ class App extends Component {
 
     const MoviesComponent = (props) => (
       <MoviesList {...props}
-        movies={this.state.movies} signOut={this.signOut} signedIn={this.state.signedIn} />
+        movies={this.state.movies} signOut={this.signOut} signedIn={this.state.signedIn} ghibliMovies={this.state.ghibliMovies} />
     )
     const MovieComponent = (props) => (
       <Movie {...props} movies={this.state.movies} signOut={this.signOut} signedIn={this.state.signedIn} />
@@ -115,7 +122,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          {this.state.signedIn ? <button onClick={this.signOut}>Sign Out</button>
+          {this.state.signedIn ? <Button onClick={this.signOut}>Sign Out</Button>
             : null}
           <Switch>
             <Route exact path="/" render={MoviesComponent} />

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import { setAxiosDefaults } from '../utils/SessionHeaderUtil'
 import ReviewList from './ReviewList';
+import { List, Button, Form, Container } from '../../../node_modules/semantic-ui-react';
 
 class Movie extends Component {
     state = {
@@ -56,36 +57,73 @@ class Movie extends Component {
     render() {
         const movie = this.state.movie
         return (
-            <div>
-                <button onClick={() => this.goBack()}> Back </button>
+            <Container>
+                <Button onClick={() => this.goBack()}> Back </Button>
                 <div>
-                    <label htmlFor="image">Add Image:</label>
-                    <form onSubmit={this.handleSubmit}>
+                    <Form onSubmit={this.handleSubmit}>
+                        <label htmlFor="image">Add Image:</label>
                         <input type="string"
                             name="image"
                             onChange={this.handleChange} />
-                        <button>Add</button>
-                    </form>
+                        <Button>Add</Button>
+                    </Form>
                 </div>
-                <div>
-                    <h1>{movie.title}</h1>
+                <List>
+                    <List.Item>
+                        <List.Content>
+                            <h1>{movie.title}</h1>
+                        </List.Content>
+                    </List.Item>
                     <img src={movie.image} alt={movie.title} />
-                    <h3>Director: {movie.director}</h3>
-                    <h3>Producer: {movie.producer}</h3>
-                    <h3>Release Date: {movie.release_date}</h3>
-                    <h3>Rating: {movie.rating}</h3>
-                    <h3>Species: {movie.specie}</h3>
-                    <h3>Location: {movie.location}</h3>
-                    <h3>Vehicles: {movie.vehicle}</h3>
+                    <List.Item>
+                        <List.Content>
+                            Director: {movie.director}
+                        </List.Content>
+                    </List.Item>
+                    <List.Item>
+                        <List.Content>
 
-                    <h3>Characters:</h3>
-                    <li><h5>{movie.people}</h5></li>
+                            Producer: {movie.producer}
+                        </List.Content>
+                    </List.Item>
+                    <List.Item>
+                        <List.Content>
+                            Release Date: {movie.release_date}
+                        </List.Content>
+                    </List.Item>
+                    <List.Item>
+                        <List.Content>
 
-                </div>
+                            Rating: {movie.rating}
+                        </List.Content>
+                    </List.Item>
+                    <List.Item>
+                        <List.Content>
+                            Location: {movie.location}
+                        </List.Content>
+                    </List.Item>
+                    <List.Item>
+                        <List.Content>
+
+                            Vehicles: {movie.vehicle}
+                        </List.Content>
+                    </List.Item>
+                    <List.Item>
+                        <List.Content>
+                            Species: {movie.specie}
+                        </List.Content>
+                    </List.Item>
+                    <List.Item>
+                        <List.Content>
+
+                            Characters: <h5>{movie.people}</h5>
+                        </List.Content>
+                    </List.Item>
+                </List>
                 <div>
                     <ReviewList {...this.props} reviews={this.state.reviews} />
                 </div>
-            </div>
+            </Container>
         );
     }
 }

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import { setAxiosDefaults } from '../utils/SessionHeaderUtil'
 import { Link } from 'react-router-dom'
+import { Segment, Button, Icon, Container, Comment, Form } from 'semantic-ui-react'
+
 
 class ReviewList extends Component {
     state = {
@@ -65,32 +67,42 @@ class ReviewList extends Component {
         const reviews = this.state.reviews
         const movieId = this.props.match.params.id
         const review = reviews.map((review) => {
+            console.log(review)
             return (
-                <div key={review.id}>
-                    <Link to={`/movies/${movieId}/reviews/${review.id}`}><h4>{review.title}</h4></Link>
-                    <h4>{review.comment}</h4>
-                    <button onClick={() => this.deleteComment(review.id)}>X</button>
-                </div>
+                <Comment key={review.id}>
+                    <Comment.Content>
+                        <Link to={`/movies/${movieId}/reviews/${review.id}`}><h3>{review.title} <Icon name="edit" size="small"></Icon></h3></Link>
+                        <Comment.Text>
+                            <h4>{review.comment}</h4>
+                        </Comment.Text>
+                        <Comment.Action onClick={() => this.deleteComment(review.id)}>Delete</Comment.Action>
+                    </Comment.Content>
+                </Comment>
             )
         })
         return (
-            <div>
+            <Container>
                 <div>
                     <h2>Reviews</h2>
                     {review}
                 </div>
-                <div>
-                    <form onSubmit={this.handleSubmit}>
-                        <label htmlFor="title">Title:</label>
-                        <input type="string" name="newTitle" onChange={this.handleChange} />
-                        <br />
-                        <textarea name="newComment" onChange={this.handleChange} cols="100" rows="10"></textarea>
-                        <br />
-                        <button>Review</button>
-                    </form>
-                </div>
+                <Segment.Group>
+                    <Segment>
+                        <Form onSubmit={this.handleSubmit}>
+                            <Form.Field>
+                                <label>Title</label>
+                                <input type="string" name="newTitle" onChange={this.handleChange} />
+                            </Form.Field>
+                            <Form.Field>
+                                <label >Review</label>
+                                <textarea name="newComment" onChange={this.handleChange} cols="50" rows="10"></textarea>
+                            </Form.Field>
+                            <Button basic color='blue'>Submit</Button>
+                        </Form>
+                    </Segment>
+                </Segment.Group>
 
-            </div>
+            </Container>
         );
     }
 }
