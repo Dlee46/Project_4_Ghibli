@@ -63,7 +63,6 @@ class Review extends Component {
         const review = this.state.review
         return (
             <Container>
-                <Button onClick={() => this.goBack()}> Back </Button>
 
                 {this.state.showEdit ?
                     <div>
@@ -77,10 +76,11 @@ class Review extends Component {
                             <Label htmlFor="title">Title:</Label>
                             <input type="string" name="title" defaultValue={review.title} onChange={this.handleEditChange} />
                             <br />
-                            <textarea name="comment" placheholder={review.comment} onChange={this.handleEditChange} cols="100" rows="10"></textarea>
+                            <Form.TextArea name="comment" placheholder={review.comment} onChange={this.handleEditChange} cols="100" rows="10"></Form.TextArea>
                             <br />
                             <Button>Update</Button>
                         </Form>
+                        <Button onClick={() => this.goBack()}> Back </Button>
 
                     </div>
                 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import { setAxiosDefaults } from '../utils/SessionHeaderUtil'
 import ReviewList from './ReviewList';
-import { List, Button, Form, Container } from '../../../node_modules/semantic-ui-react';
+import { List, Button, Form, Container, Label } from '../../../node_modules/semantic-ui-react';
 
 class Movie extends Component {
     state = {
@@ -61,7 +61,7 @@ class Movie extends Component {
                 <Button onClick={() => this.goBack()}> Back </Button>
                 <div>
                     <Form onSubmit={this.handleSubmit}>
-                        <label htmlFor="image">Add Image:</label>
+                        <Label htmlFor="image">Add Image:</Label>
                         <input type="string"
                             name="image"
                             onChange={this.handleChange} />
@@ -77,46 +77,46 @@ class Movie extends Component {
                     <img src={movie.image} alt={movie.title} />
                     <List.Item>
                         <List.Content>
-                            Director: {movie.director}
+                            <h3>Director: </h3>
+                            {movie.director}
+                        </List.Content>
+                    </List.Item>
+                    <List.Item>
+                        <List.Content>
+                            <h3> Producer: </h3>{movie.producer}
+                        </List.Content>
+                    </List.Item>
+                    <List.Item>
+                        <List.Content>
+                            <h3>Release Date: </h3>{movie.release_date}
                         </List.Content>
                     </List.Item>
                     <List.Item>
                         <List.Content>
 
-                            Producer: {movie.producer}
+                            <h3>Rating: </h3>{movie.rating}
                         </List.Content>
                     </List.Item>
                     <List.Item>
                         <List.Content>
-                            Release Date: {movie.release_date}
-                        </List.Content>
-                    </List.Item>
-                    <List.Item>
-                        <List.Content>
-
-                            Rating: {movie.rating}
-                        </List.Content>
-                    </List.Item>
-                    <List.Item>
-                        <List.Content>
-                            Location: {movie.location}
+                            <h3> Location: </h3>{movie.location}
                         </List.Content>
                     </List.Item>
                     <List.Item>
                         <List.Content>
 
-                            Vehicles: {movie.vehicle}
+                            <h3>Vehicles: </h3>{movie.vehicle}
                         </List.Content>
                     </List.Item>
                     <List.Item>
                         <List.Content>
-                            Species: {movie.specie}
+                            <h3>Species: </h3>{movie.specie}
                         </List.Content>
                     </List.Item>
                     <List.Item>
                         <List.Content>
 
-                            Characters: <h5>{movie.people}</h5>
+                            <h3>Characters: </h3><h5>{movie.people}</h5>
                         </List.Content>
                     </List.Item>
                 </List>

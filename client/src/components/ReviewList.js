@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import { setAxiosDefaults } from '../utils/SessionHeaderUtil'
 import { Link } from 'react-router-dom'
-import { Segment, Button, Icon, Container, Comment, Form } from 'semantic-ui-react'
+import { Segment, Button, Icon, Container, Comment, Form, Header, Label } from 'semantic-ui-react'
 
 
 class ReviewList extends Component {
@@ -82,20 +82,18 @@ class ReviewList extends Component {
         })
         return (
             <Container>
-                <div>
-                    <h2>Reviews</h2>
+                <Comment.Group>
+                    <Header>Reviews</Header>
                     {review}
-                </div>
+                </Comment.Group>
                 <Segment.Group>
                     <Segment>
                         <Form onSubmit={this.handleSubmit}>
+                            <Label>Title</Label>
+                            <input type="string" name="newTitle" onChange={this.handleChange} />
                             <Form.Field>
-                                <label>Title</label>
-                                <input type="string" name="newTitle" onChange={this.handleChange} />
-                            </Form.Field>
-                            <Form.Field>
-                                <label >Review</label>
-                                <textarea name="newComment" onChange={this.handleChange} cols="50" rows="10"></textarea>
+                                <Label >Review</Label>
+                                <Form.TextArea name="newComment" onChange={this.handleChange} cols="50" rows="10"></Form.TextArea>
                             </Form.Field>
                             <Button basic color='blue'>Submit</Button>
                         </Form>

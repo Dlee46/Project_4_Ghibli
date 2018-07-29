@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import { setAxiosDefaults } from '../utils/SessionHeaderUtil'
 import { Link } from 'react-router-dom'
-import { Button, Card, Image } from 'semantic-ui-react'
+import { Button, Card, Image, Container } from 'semantic-ui-react'
 class MoviesList extends Component {
     state = {
         movies: [],
@@ -97,7 +97,7 @@ class MoviesList extends Component {
             )
         })
         return (
-            <div>
+            <Container>
                 <div>
                     <input type="text"
                         name="title"
@@ -105,15 +105,15 @@ class MoviesList extends Component {
                         onChange={this.ghibliHandleChange} />
                     <button onClick={this.getGhibliMovie}>Search</button>
                 </div>
-                <div>
+                <Card>
                     <button onClick={this.addMovie}>Add Movie</button>
                     <h1>Title: {ghibli.title}</h1>
                     <h3>Did it Work? {ghibli.director}</h3>
-                </div>
+                </Card>
                 <Card.Group>
                     {movie}
                 </Card.Group>
-            </div >
+            </Container >
         );
     }
 }
