@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import { setAxiosDefaults } from '../utils/SessionHeaderUtil'
 import ReviewList from './ReviewList';
-import { List, Button, Form, Container, Label, Segment} from '../../../node_modules/semantic-ui-react';
+import { List, Button, Form, Container, Label, Segment } from '../../../node_modules/semantic-ui-react';
 import styled from 'styled-components'
 
 const Background = styled.div`
+background-color: #f0f3f3;
 @media (max-width: 400px) {
 background-image: url('http://33.media.tumblr.com/8fc5ea349115e4c071f4a694aa1eedf9/tumblr_nj5r0xB8N51rm75fro2_500.gif');
 background-repeat: no-repeat;
@@ -18,6 +19,7 @@ overflow: scroll;
 }
 `
 const Banner = styled.div`
+background-color: white;
 display:flex;
 display: column;
 justify-content: space-evenly;
@@ -76,10 +78,9 @@ class Movie extends Component {
         const movieId = this.props.match.params.id
         axios.patch(`/api/movies/${movieId}/`, updatedMovie)
             .then((res) => {
-                console.log("HI", res.data)
-                // this.setState({
-                //     movies: res.data
-                // })
+                this.setState({
+                    movies: res.data
+                })
             })
     }
     render() {

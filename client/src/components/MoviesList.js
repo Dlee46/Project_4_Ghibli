@@ -36,7 +36,7 @@ const StyledImage = styled(Image)`
 class MoviesList extends Component {
     state = {
         movies: [],
-        ghibliMovies: []
+        ghibli: {}
     }
     async componentDidMount() {
         try {
@@ -49,13 +49,6 @@ class MoviesList extends Component {
         } catch (error) {
             console.error(error)
         }
-    }
-    ghibliHandleChange = (event) => {
-        const input = event.target.name
-        const value = event.target.value
-        const movie = [...this.state.ghibliMovies]
-        movie[input] = value
-        this.setState({ ghibliMovies: movie })
     }
     getMovies = async () => {
         try {
@@ -72,31 +65,29 @@ class MoviesList extends Component {
             this.setState({ movies: res.data })
         })
     }
+    ghibliHandleChange = (event) => {
+        const input = event.target.name
+        const value = event.target.value
+        const movie = { ...this.state.ghibli }
+        movie[input] = value
+        this.setState({ ghibli: movie })
+    }
     getGhibliMovie = () => {
+        let movies = []
         axios.get(`https://ghibliapi.herokuapp.com/films/`)
             .then((res) => {
-                // const ghibli = [
-                //     title: res.data.title,
-                //     description: res.data.description,
-                //     director: res.data.director,
-                //     producer: res.data.producer,
-                //     release_date: res.data.release_date,
-                //     rating: res.data.rt_score,
-                //     people: res.data.people,
-                //     specie: res.data.species,
-                //     location: res.data.locations,
-                //     vehicle: res.data.vehicles
-                // ]
-                res.data.filter((movie) => {
-                    console.log(movie.title == "Castle in the Sky")
-                }).then((res) => {
-                    this.setState({ ghibliMovies: res.data })
+                movies = (res.data)
+            }).then(() => {
+                const movieFound = movies.find((movie) => {
+                    return movie.title.toLowerCase() == (this.state.ghibli.title)
                 })
+                this.setState({ ghibli: movieFound })
             })
+
 
     }
     addMovie = (event) => {
-        const newMovie = { ...this.state.ghibliMovies }
+        const newMovie = { ...this.state.ghibli }
         axios.post(`/api/movies/`, newMovie).then((res) => {
             this.setState({
                 movies: res.data
@@ -104,7 +95,8 @@ class MoviesList extends Component {
         })
     }
     render() {
-        const ghibli = this.state.ghibliMovies || []
+        console.log(this.state)
+        const ghibli = this.state.ghibli || []
         const movies = this.state.movies
         const movie = movies.map((movie) => {
             const movieId = `/movies/${movie.id}/reviews`
@@ -137,7 +129,8 @@ class MoviesList extends Component {
                     </Segment>
                     <StyledCard onClick={this.addMovie}>
                         <h1>Title: {ghibli.title}</h1>
-                        <h3>Did it Work? {ghibli.director}</h3>
+                        <h3>Director: {ghibli.director}</h3>
+                        <h3>Producer: {ghibli.producer}</h3>
                     </StyledCard>
                     <StyledCard.Group>
                         {movie}
