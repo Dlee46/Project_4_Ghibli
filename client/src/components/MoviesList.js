@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import { setAxiosDefaults } from '../utils/SessionHeaderUtil'
 import { Link } from 'react-router-dom'
-import { Button, Card, Image, Container, Segment } from 'semantic-ui-react'
+import { Button, Card, Image, Container, Segment, Icon } from 'semantic-ui-react'
 import styled from 'styled-components'
 
 const Background = styled.div`
@@ -146,7 +146,7 @@ class MoviesList extends Component {
                             name="title"
                             placeholder="Title"
                             onChange={this.ghibliHandleChange} />
-                        <Button onClick={this.getGhibliMovie}>Search</Button>
+                        <Button onClick={this.getGhibliMovie}><Icon name="search"></Icon></Button>
                     </Segment>
                     <StyledCard onClick={this.addMovie}>
                         <h1>Title: {ghibli.title}</h1>
