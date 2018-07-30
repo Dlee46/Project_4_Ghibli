@@ -6,6 +6,7 @@ import { Button, Card, Image, Container, Segment } from 'semantic-ui-react'
 import styled from 'styled-components'
 
 const Background = styled.div`
+    @media (max-width: 400px) {
 background-image: url('http://33.media.tumblr.com/891008a1c62d811c86b8406e1ce04e80/tumblr_nj5r0xB8N51rm75fro1_500.gif');
 background-repeat: no-repeat;
 background-size:270vh;
@@ -13,6 +14,24 @@ height: 100vh;
 width: 100%;
 opacity: 0.8;
 overflow: scroll;
+    }
+
+`
+const StyledCard = styled(Card)`
+&&&{
+    @media (max-width: 400px) {
+    width: 100%;
+    opacity: 0.9;
+    margin-bottom: 5vh;
+    }
+}
+`
+const StyledImage = styled(Image)`
+&&&{
+@media (max-width: 400px) {
+    display: none;
+}
+}
 `
 class MoviesList extends Component {
     state = {
@@ -90,25 +109,24 @@ class MoviesList extends Component {
         const movie = movies.map((movie) => {
             const movieId = `/movies/${movie.id}/reviews`
             return (
-                <Card key={movie.id}>
-                    <Card.Content>
-                        <Link to={movieId} alt={movie.title} ><Card.Header>
+                <StyledCard key={movie.id}>
+                    <StyledCard.Content>
+                        <Link to={movieId} alt={movie.title} ><StyledCard.Header>
                             <h1>
                                 {movie.title}
                             </h1>
-                        </Card.Header></Link>
+                        </StyledCard.Header></Link>
                         <Image src={movie.image} alt={movie.title} href={movieId} />
-                        <Card.Meta>
-                            <h3>{movie.director}</h3>
-                            <h3>{movie.producer}</h3>
-                        </Card.Meta>
+                        <h3>Director: {movie.director}</h3>
+                        <h3>Producer: {movie.producer}</h3>
                         <Button basic color='red' onClick={() => this.deleteMovie(movie.id)}>Remove</Button>
-                    </Card.Content>
-                </Card >
+                    </StyledCard.Content>
+                </StyledCard >
             )
         })
         return (
             <Background>
+                <StyledImage src="https://choualbox.com/Img/139049849462.jpg" alt="" />
                 <Container>
                     <Segment>
                         <input type="text"
@@ -117,13 +135,15 @@ class MoviesList extends Component {
                             onChange={this.ghibliHandleChange} />
                         <Button onClick={this.getGhibliMovie}>Search</Button>
                     </Segment>
-                    <Card onClick={this.addMovie}>
+                    <StyledCard onClick={this.addMovie}>
                         <h1>Title: {ghibli.title}</h1>
                         <h3>Did it Work? {ghibli.director}</h3>
-                    </Card>
-                    <Card.Group>
+                    </StyledCard>
+                    <StyledCard.Group>
                         {movie}
-                    </Card.Group>
+                    </StyledCard.Group>
+                    {this.props.signedIn ? <Button onClick={this.props.signOut}>Sign Out</Button>
+                        : null}
                 </Container>
             </Background>
         );

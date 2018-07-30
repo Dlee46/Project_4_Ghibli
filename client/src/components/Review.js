@@ -1,7 +1,27 @@
 import React, { Component } from 'react';
 import { setAxiosDefaults } from '../utils/SessionHeaderUtil'
 import axios from 'axios'
-import { Form, Button, Container, Label } from '../../../node_modules/semantic-ui-react';
+import { Form, Button, Container, Label, Segment } from '../../../node_modules/semantic-ui-react';
+import styled from 'styled-components'
+
+const Background = styled.div`
+background-image: url('https://img00.deviantart.net/6c07/i/2011/191/2/c/totoro_by_iriname-d3lmfir.jpg');
+background-repeat: no-repeat;
+background-size: 100%;
+background-position: center;
+height: 100vh;
+width:100%;
+@media (max-width: 500px) {
+background-image: url('http://33.media.tumblr.com/8fc60d2a4d5be9e7a397d8190b8ea231/tumblr_nj5r0xB8N51rm75fro3_500.gif');
+background-size:270vh;
+overflow: scroll;
+}
+`
+const StyledForm = styled(Segment)`
+&&&{
+    opacity: 0.7;
+}
+`
 
 class Review extends Component {
     state = {
@@ -62,30 +82,30 @@ class Review extends Component {
     render() {
         const review = this.state.review
         return (
-            <Container>
-
-                {this.state.showEdit ?
-                    <div>
-                        {review.title}
-                        {review.comment}
-                    </div>
-                    :
-                    <div>
-
-                        <Form onSubmit={this.handleEditSubmit}>
-                            <Label htmlFor="title">Title:</Label>
-                            <input type="string" name="title" defaultValue={review.title} onChange={this.handleEditChange} />
-                            <br />
-                            <Form.TextArea name="comment" placheholder={review.comment} onChange={this.handleEditChange} cols="100" rows="10"></Form.TextArea>
-                            <br />
-                            <Button>Update</Button>
-                        </Form>
-                        <Button onClick={() => this.goBack()}> Back </Button>
-
-                    </div>
-                }
-
-            </Container>
+            <Background>
+                <Container>
+                    {this.state.showEdit ?
+                        <div>
+                            {review.title}
+                            {review.comment}
+                        </div>
+                        :
+                        <StyledForm>
+                            <h1>Edit Review</h1>
+                            <Form onSubmit={this.handleEditSubmit}>
+                                <Label htmlFor="title">Title:</Label>
+                                <input type="string" name="title" defaultValue={review.title} onChange={this.handleEditChange} />
+                                <br />
+                                <Form.TextArea name="comment" placheholder={review.comment} onChange={this.handleEditChange} cols="100" rows="10"></Form.TextArea>
+                                <Button>Update</Button>
+                                <Button onClick={() => this.goBack()}> Back </Button>
+                                {this.props.signedIn ? <Button onClick={this.props.signOut}>Sign Out</Button>
+                                    : null}
+                            </Form>
+                        </StyledForm>
+                    }
+                </Container>
+            </Background>
         );
     }
 }

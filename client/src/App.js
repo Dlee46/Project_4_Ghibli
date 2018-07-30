@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
-import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom'
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import SignUp from './components/SignUp'
 import LogIn from './components/LogIn'
 import axios from 'axios'
 import MoviesList from './components/MoviesList'
 import { saveAuthTokens, clearAuthTokens, userIsLoggedIn, setAxiosDefaults } from './utils/SessionHeaderUtil';
 import Movie from './components/Movie';
-import ReviewList from './components/ReviewList';
 import Review from './components/Review';
-import { Button } from '../../node_modules/semantic-ui-react';
 
 class App extends Component {
   state = {
@@ -122,8 +120,6 @@ class App extends Component {
     return (
       <Router>
         <div>
-          {this.state.signedIn ? <Button onClick={this.signOut}>Sign Out</Button>
-            : null}
           <Switch>
             <Route exact path="/" render={MoviesComponent} />
             <Route exact path="/signup" render={SignUpComponent} />
