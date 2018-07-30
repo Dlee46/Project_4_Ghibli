@@ -39,13 +39,10 @@ class MoviesList extends Component {
         ghibli: {}
     }
     async componentDidMount() {
+        setAxiosDefaults()
+
         try {
-            let movies = []
-            setAxiosDefaults()
-            movies = await this.getMovies()
-            this.setState({
-                movies
-            })
+            await this.getMovies()
         } catch (error) {
             console.error(error)
         }
@@ -53,7 +50,7 @@ class MoviesList extends Component {
     getMovies = async () => {
         try {
             const res = await axios.get('/api/movies/')
-            return res.data
+            await this.setState({ movies: res.data })
         } catch (error) {
             console.error(error)
             return []
@@ -61,9 +58,10 @@ class MoviesList extends Component {
     }
     deleteMovie = (movieId) => {
         setAxiosDefaults()
-        axios.delete(`/api/movies/${movieId}`).then((res) => {
-            this.setState({ movies: res.data })
-        })
+        axios.delete(`/api/movies/${movieId}`)
+            .then(() => {
+                this.getMovies()
+            })
     }
     ghibliHandleChange = (event) => {
         const input = event.target.name
@@ -79,36 +77,59 @@ class MoviesList extends Component {
                 movies = (res.data)
             }).then(() => {
                 const movieFound = movies.find((movie) => {
-                    return movie.title.toLowerCase() == (this.state.ghibli.title)
+                    return movie.title.toLowerCase() === (this.state.ghibli.title)
                 })
+
                 this.setState({ ghibli: movieFound })
+
             })
-
-
     }
     addMovie = (event) => {
-        const newMovie = { ...this.state.ghibli }
+        const ghibli = this.state.ghibli
+        const newMovie = {
+            title: ghibli.title,
+            description: ghibli.description,
+            director: ghibli.director,
+            producer: ghibli.producer,
+            release_date: ghibli.release_date,
+            rating: ghibli.rt_score,
+            people: ghibli.people,
+            specie: ghibli.species,
+            location: ghibli.locations,
+            vehicle: ghibli.vehicles
+        }
         axios.post(`/api/movies/`, newMovie).then((res) => {
             this.setState({
-                movies: res.data
+                title: res.data.title,
+                description: res.data.description,
+                director: res.data.director,
+                producer: res.data.producer,
+                release_date: res.data.release_date,
+                rating: res.data.rt_score,
+                people: res.data.people,
+                specie: res.data.species,
+                location: res.data.locations,
+                vehicle: res.data.vehicles
             })
+            this.getMovies()
         })
     }
     render() {
-        console.log(this.state)
-        const ghibli = this.state.ghibli || []
-        const movies = this.state.movies
+        const ghibli = this.state.ghibli || {}
+        const movies = this.state.movies || []
         const movie = movies.map((movie) => {
-            const movieId = `/movies/${movie.id}/reviews`
+            const movieReviewLink = `/movies/${movie.id}/reviews`
             return (
                 <StyledCard key={movie.id}>
                     <StyledCard.Content>
-                        <Link to={movieId} alt={movie.title} ><StyledCard.Header>
-                            <h1>
-                                {movie.title}
-                            </h1>
-                        </StyledCard.Header></Link>
-                        <Image src={movie.image} alt={movie.title} href={movieId} />
+                        <Link to={movieReviewLink} alt={movie.title} >
+                            <StyledCard.Header>
+                                <h1>
+                                    {movie.title}
+                                </h1>
+                            </StyledCard.Header>
+                        </Link>
+                        <Image src={movie.image} alt={movie.title} href={movieReviewLink} />
                         <h3>Director: {movie.director}</h3>
                         <h3>Producer: {movie.producer}</h3>
                         <Button basic color='red' onClick={() => this.deleteMovie(movie.id)}>Remove</Button>

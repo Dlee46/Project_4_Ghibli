@@ -77,10 +77,11 @@ class Review extends Component {
                 this.setState({
                     review: res.data
                 })
+                this.props.history.push(`/movies/${movieId}/reviews`)
             })
     }
     render() {
-        const review = this.state.review
+        const review = this.state.review || {}
         return (
             <Background>
                 <Container>

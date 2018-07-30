@@ -26,10 +26,7 @@ class Api::ReviewsController < ApplicationController
     @user = current_user
     @movies = @user.movies.find(params[:movie_id])
     @review = @movies.reviews.find(params[:id])
-    puts "ORIGINAL review " + @review.title
-    puts "NEW TITLE " + params[:review][:title]
     updateSuccess = @review.update!(review_params)
-    puts "UPDATED review " + @review.title
     render json: @review
   end
 

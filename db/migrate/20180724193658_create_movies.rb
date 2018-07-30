@@ -7,10 +7,10 @@ class CreateMovies < ActiveRecord::Migration[5.2]
       t.string :producer
       t.integer :release_date
       t.integer :rating
-      t.string :people
-      t.string :specie
-      t.string :location
-      t.string :vehicle
+      t.string :people, array: true, default: []
+      t.string :specie, array: true, default: []
+      t.string :location, array: true, default: []
+      t.string :vehicle, array: true, default: []
 
       t.timestamps
     end

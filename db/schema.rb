@@ -22,10 +22,10 @@ ActiveRecord::Schema.define(version: 2018_07_24_205236) do
     t.string "producer"
     t.integer "release_date"
     t.integer "rating"
-    t.string "people"
-    t.string "specie"
-    t.string "location"
-    t.string "vehicle"
+    t.string "people", default: [], array: true
+    t.string "specie", default: [], array: true
+    t.string "location", default: [], array: true
+    t.string "vehicle", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "description"

@@ -133,24 +133,8 @@ class Movie extends Component {
                         </List.Item>
                         <List.Item>
                             <List.Content>
-                                <h3> Location: </h3>{movie.location}
-                            </List.Content>
-                        </List.Item>
-                        <List.Item>
-                            <List.Content>
 
-                                <h3>Vehicles: </h3>{movie.vehicle}
-                            </List.Content>
-                        </List.Item>
-                        <List.Item>
-                            <List.Content>
-                                <h3>Species: </h3>{movie.specie}
-                            </List.Content>
-                        </List.Item>
-                        <List.Item>
-                            <List.Content>
-
-                                <h3>Characters: </h3><h5>{movie.people}</h5>
+                                <h3>Synopsis: </h3>{movie.description}
                             </List.Content>
                         </List.Item>
                     </Segment>

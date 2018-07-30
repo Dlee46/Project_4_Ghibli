@@ -34,12 +34,8 @@ class ReviewList extends Component {
     }
     async componentDidMount() {
         try {
-            let reviews = []
             setAxiosDefaults()
-            reviews = await this.getReviews()
-            this.setState({
-                reviews
-            })
+            await this.getReviews()
         } catch (error) {
             console.error(error)
         }
@@ -48,7 +44,9 @@ class ReviewList extends Component {
         try {
             const movieId = this.props.match.params.id
             const res = await axios.get(`/api/movies/${movieId}/reviews`)
-            return res.data
+            this.setState({
+                reviews: res.data
+            })
         } catch (error) {
             console.error(error)
             return []
@@ -57,13 +55,12 @@ class ReviewList extends Component {
     deleteComment = (reviewId) => {
         const movieId = this.props.match.params.id
         axios.delete(`/api/movies/${movieId}/reviews/${reviewId}`)
-            .then((res) => {
-                this.setState({
-                    reviews: res.data
-                })
+            .then(() => {
+                this.getReviews()
             })
     }
     render() {
+        console.log(this.props)
         const reviews = this.state.reviews
         const movieId = this.props.match.params.id
         const review = reviews.map((review) => {

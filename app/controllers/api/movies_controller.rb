@@ -15,13 +15,9 @@ class Api::MoviesController < ApplicationController
   
     def create
       @user = current_user
-      @movie = @user.movies.build(movie_params)
-  
-      if @user.save
-        render json: @movie, status: :created, location: @movie
-      else
-        render json: @movie.errors, status: :unprocessable_entity
-      end 
+      @movie = @user.movies.create!(movie_params)
+      render json: @movie
+ 
     end
 
     def update
@@ -46,6 +42,6 @@ class Api::MoviesController < ApplicationController
     private
   
     def movie_params
-      params.require(:movie).permit(:title, :image, :director, :producer, :release_date, :rating, :description)
+      params.require(:movie).permit(:title, :image, :director, :producer, :release_date, :rating, :description, :people, :specie, :location, :vehicle)
     end
 end
