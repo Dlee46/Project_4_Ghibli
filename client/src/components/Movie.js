@@ -16,6 +16,7 @@ height: 100vh;
 width: 100%;
 opacity: 0.8;
 overflow: scroll;
+margin-top: 11%;
 }
 `
 const Banner = styled.div`

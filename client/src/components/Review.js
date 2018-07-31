@@ -22,7 +22,14 @@ const StyledForm = styled(Segment)`
     opacity: 0.7;
 }
 `
-
+const StyledContainer = styled(Container)`
+&&&{
+    height: 100%;
+display: flex;
+align-items: center;
+justify-content:center;
+}
+`
 class Review extends Component {
     state = {
         review: {},
@@ -87,7 +94,7 @@ class Review extends Component {
         const review = this.state.review || {}
         return (
             <Background>
-                <Container>
+                <StyledContainer>
                     {this.state.showEdit ?
                         <div>
                             {review.title}
@@ -109,7 +116,7 @@ class Review extends Component {
                                 : null}
                         </StyledForm>
                     }
-                </Container>
+                </StyledContainer>
             </Background>
         );
     }
