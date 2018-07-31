@@ -137,7 +137,7 @@ class Movie extends Component {
                         <Menu.Item>
                             <Form onSubmit={this.handleSubmit}>
                                 <Input type="string"
-                                    name="Add Image"
+                                    name="image"
                                     onChange={this.handleChange} />
                                 <Button>Add</Button>
                             </Form>
