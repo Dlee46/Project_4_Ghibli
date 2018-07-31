@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import { setAxiosDefaults } from '../utils/SessionHeaderUtil'
 import { Link } from 'react-router-dom'
-import { Button, Card, Image, Container, Segment, Icon } from 'semantic-ui-react'
+import { Button, Card, Image, Container, Menu, Icon, Input } from 'semantic-ui-react'
 import styled from 'styled-components'
 
 const Background = styled.div`
@@ -14,11 +14,15 @@ height: 100vh;
 width: 100%;
 opacity: 0.8;
 overflow: scroll;
+margin-top: 11%;
     }
 
 `
 const StyledCard = styled(Card)`
 &&&{
+    .showGhibli{
+
+    }
     @media (max-width: 400px) {
     width: 100%;
     opacity: 0.9;
@@ -27,16 +31,45 @@ const StyledCard = styled(Card)`
 }
 `
 const StyledImage = styled(Image)`
+margin-top: 3%;
 &&&{
 @media (max-width: 400px) {
     display: none;
 }
 }
 `
+const MenuStyle = styled(Menu)`
+    &&&{
+    z-index: 10000;
+    position: fixed;
+    top: 0px;
+    width:100%;
+    background-color: white;
+    margin: 0;
+    height: 2%;
+    @media (max-width: 400px) {
+        .hideItem {      
+            display: none;
+        }
+    }
+}
+`
 class MoviesList extends Component {
     state = {
         movies: [],
         ghibli: {}
+    }
+    returnHome = () => {
+        this.props.history.push(`/`)
+    }
+    login = () => {
+        this.props.history.push(`/login`)
+    }
+    signup = () => {
+        this.props.history.push(`/signup`)
+    }
+    goBack = () => {
+        this.props.history.goBack()
     }
     async componentDidMount() {
         setAxiosDefaults()
@@ -77,7 +110,7 @@ class MoviesList extends Component {
                 movies = (res.data)
             }).then(() => {
                 const movieFound = movies.find((movie) => {
-                    return movie.title.toLowerCase() === (this.state.ghibli.title)
+                    return movie.title.toLowerCase() === (this.state.ghibli.title.toLowerCase())
                 })
 
                 this.setState({ ghibli: movieFound })
@@ -115,6 +148,8 @@ class MoviesList extends Component {
         })
     }
     render() {
+        console.log(this.props)
+        const { activeItem } = this.state
         const ghibli = this.state.ghibli || {}
         const movies = this.state.movies || []
         const movie = movies.map((movie) => {
@@ -139,25 +174,56 @@ class MoviesList extends Component {
         })
         return (
             <Background>
+                <MenuStyle secondary>
+                    <Menu.Item
+                        className="hideItem"
+                        name='Home'
+                        onClick={this.returnHome} />
+                    <Menu.Item
+                        className="hideItem"
+                        name='Back'
+                        onClick={() => this.goBack()}
+                    />
+                    {!this.props.signedIn ?
+                        <Menu.Item
+                            className="hideItem"
+                            name='Sign Up'
+                            onClick={() => this.signup()}
+                        />
+                        : null}
+                    {!this.props.signedIn ?
+                        <Menu.Item
+                            className="hideItem"
+                            name='Log In'
+                            onClick={() => this.login()}
+                        />
+                        : null}
+                    <Menu.Menu position='right'>
+                        <Menu.Item>
+                            <Input type="text"
+                                name="title"
+                                placeholder="Title"
+                                onChange={this.ghibliHandleChange} />
+                            <Button onClick={this.getGhibliMovie}><Icon name="search"></Icon></Button>
+                        </Menu.Item>
+                        {this.props.signedIn ? <Menu.Item
+                            className="hideItem"
+                            name='logout'
+                            onClick={this.props.signOut}
+                        />
+                            : null}
+                    </Menu.Menu>
+                </MenuStyle>
                 <StyledImage src="https://choualbox.com/Img/139049849462.jpg" alt="" />
                 <Container>
-                    <Segment>
-                        <input type="text"
-                            name="title"
-                            placeholder="Title"
-                            onChange={this.ghibliHandleChange} />
-                        <Button onClick={this.getGhibliMovie}><Icon name="search"></Icon></Button>
-                    </Segment>
-                    <StyledCard onClick={this.addMovie}>
-                        <h1>Title: {ghibli.title}</h1>
-                        <h3>Director: {ghibli.director}</h3>
-                        <h3>Producer: {ghibli.producer}</h3>
-                    </StyledCard>
                     <StyledCard.Group>
+                        <StyledCard onClick={this.addMovie}>
+                            <h1>Title: {ghibli.title}</h1>
+                            <h3>Director: {ghibli.director}</h3>
+                            <h3>Producer: {ghibli.producer}</h3>
+                        </StyledCard>
                         {movie}
                     </StyledCard.Group>
-                    {this.props.signedIn ? <Button onClick={this.props.signOut}>Sign Out</Button>
-                        : null}
                 </Container>
             </Background>
         );

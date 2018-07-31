@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import { setAxiosDefaults } from '../utils/SessionHeaderUtil'
 import ReviewList from './ReviewList';
-import { List, Button, Form, Container, Label, Segment } from '../../../node_modules/semantic-ui-react';
+import { List, Button, Form, Container, Label, Segment, Menu, Input, Icon } from '../../../node_modules/semantic-ui-react';
 import styled from 'styled-components'
 
 const Background = styled.div`
@@ -24,7 +24,7 @@ display:flex;
 display: column;
 justify-content: space-evenly;
 border: 0;
-margin: 2% 0;
+margin:6% 0 0 0;
 width: 100%;
 img{
     width: 20vw;
@@ -34,10 +34,35 @@ img{
 display: none;
 }
 `
+const NavBottom = styled.div`
+@media (min-width: 400px) {
+display: none;
+}
+`
+const MenuStyle = styled(Menu)`
+    &&&{
+    z-index: 10000;
+    position: fixed;
+    top: 0px;
+    width:100%;
+    background-color: #f0f3f3;
+    margin: 0;
+    height: 2%;
+}
+`
 class Movie extends Component {
     state = {
         movie: {},
         reviews: []
+    }
+    returnHome = () => {
+        this.props.history.push(`/`)
+    }
+    login = () => {
+        this.props.history.push(`/login`)
+    }
+    signup = () => {
+        this.props.history.push(`/signup`)
     }
     goBack = () => {
         this.props.history.goBack()
@@ -87,20 +112,50 @@ class Movie extends Component {
         const movie = this.state.movie
         return (
             <Background>
+                <MenuStyle secondary>
+                    <Menu.Item
+                        name='Home'
+                        onClick={this.returnHome} />
+                    <Menu.Item
+                        name='Back'
+                        onClick={() => this.goBack()}
+                    />
+                    {!this.props.signedIn ?
+                        <Menu.Item
+                            name='Sign Up'
+                            onClick={() => this.signup()}
+                        />
+                        : null}
+                    {!this.props.signedIn ?
+                        <Menu.Item
+                            name='Log In'
+                            onClick={() => this.login()}
+                        />
+                        : null}
+                    <Menu.Menu position='right'>
+                        <Menu.Item>
+                            <Form onSubmit={this.handleSubmit}>
+                                <Input type="string"
+                                    name="Add Image"
+                                    onChange={this.handleChange} />
+                                <Button>Add</Button>
+                            </Form>
+                        </Menu.Item>
+                        {this.props.signedIn ? <Menu.Item
+                            name='logout'
+                            onClick={this.props.signOut}
+                        />
+                            : null}
+                    </Menu.Menu>
+                </MenuStyle>
                 <Banner>
                     <img src="https://ih0.redbubble.net/image.210455430.8452/flat,800x800,075,f.u1.jpg" alt="" />
                     <img src="https://ih0.redbubble.net/image.210454517.8427/flat,800x800,075,f.u1.jpg" alt="" />
                     <img src="https://ih1.redbubble.net/image.210456388.8481/flat,800x800,075,f.u1.jpg" alt="" />
                 </Banner>
+
                 <Container>
                     <div>
-                        <Form onSubmit={this.handleSubmit}>
-                            <Label htmlFor="image">Add Image:</Label>
-                            <input type="string"
-                                name="image"
-                                onChange={this.handleChange} />
-                            <Button>Add</Button>
-                        </Form>
                     </div>
                     <Segment>
                         <List.Item>
@@ -141,9 +196,11 @@ class Movie extends Component {
                     <div>
                         <ReviewList {...this.props} reviews={this.state.reviews} />
                     </div>
-                    <Button onClick={() => this.goBack()}> Back </Button>
-                    {this.props.signedIn ? <Button onClick={this.props.signOut}>Sign Out</Button>
-                        : null}
+                    <NavBottom>
+                        <Button onClick={() => this.goBack()}> Back </Button>
+                        {this.props.signedIn ? <Button onClick={this.props.signOut}>Sign Out</Button>
+                            : null}
+                    </NavBottom>
                 </Container>
             </Background>
         );

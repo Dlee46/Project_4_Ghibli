@@ -128,6 +128,7 @@ class App extends Component {
             <Route exact path='/movies/:movieId/reviews/:id' render={ReviewsComponent} />
           </Switch>
         </div>
+
       </Router>
     )
   }

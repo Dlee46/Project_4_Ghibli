@@ -37,6 +37,9 @@ class Review extends Component {
     goBack = () => {
         this.props.history.goBack()
     }
+    returnHome = () => {
+        this.props.history.push(`/`)
+    }
     async componentDidMount() {
         try {
             let review = {}
@@ -99,10 +102,11 @@ class Review extends Component {
                                 <br />
                                 <Form.TextArea name="comment" placheholder={review.comment} onChange={this.handleEditChange} cols="100" rows="10"></Form.TextArea>
                                 <Button>Update</Button>
-                                <Button onClick={() => this.goBack()}> Back </Button>
-                                {this.props.signedIn ? <Button onClick={this.props.signOut}>Sign Out</Button>
-                                    : null}
                             </Form>
+                            <Button onClick={() => this.returnHome()}> Home </Button>
+                            <Button onClick={() => this.goBack()}> Back </Button>
+                            {this.props.signedIn ? <Button onClick={this.props.signOut}>Sign Out</Button>
+                                : null}
                         </StyledForm>
                     }
                 </Container>
