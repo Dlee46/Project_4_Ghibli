@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Oswald', sans-serif;
 }
 img{
   width: 100%;
@@ -10,4 +10,11 @@ img{
   display: flex;
   justify-content: center;
 
+}
+a{
+  font-family: 'Amatic SC', cursive;
+
+}
+h1, h3{
+  font-family: 'Permanent Marker', cursive;
 }
