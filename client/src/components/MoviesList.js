@@ -20,9 +20,6 @@ margin-top: 11%;
 `
 const StyledCard = styled(Card)`
 &&&{
-    .showGhibli{
-
-    }
     @media (max-width: 400px) {
     width: 100%;
     opacity: 0.9;

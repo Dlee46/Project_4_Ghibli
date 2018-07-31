@@ -6,4 +6,8 @@ body {
 img{
   width: 100%;
 }
+.ui.cards{
+  display: flex;
+  justify-content: center;
 
+}
