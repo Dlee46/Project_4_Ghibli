@@ -22,7 +22,7 @@ To test the language of Ruby, I created a movie review application that was focu
 - POSTMAN
 - GITHUB
 
-It was honestly one of the hardest project. This was because I had a hard time generating ideas and ended up doing something that I was not full invested in. I originally wanted to do another app that did not meet the requirements of the project guidelines. In the future, I would like to create more options for user experience. The app only meets MVP and requires more styling.
+It was honestly one of the hardest project. This was because I had a hard time generating ideas. In the future, I would like to create more options for user experience. The app only meets MVP and requires more styling from being constrained from time.
 
 ## Wireframes & ERD
 [FIGMA](https://www.figma.com/file/HQ6H8SRN1GhfnTVU5Kht48CW/Project-4-Ghibli?node-id=5%3A0)
