@@ -20,6 +20,9 @@ width: 100%;
 opacity: 0.8;
 overflow: scroll;
 margin-top: 11%;
+img{
+    height: 250px;
+}
 }
 `
 const Banner = styled.div`
