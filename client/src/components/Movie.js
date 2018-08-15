@@ -144,6 +144,7 @@ class Movie extends Component {
                             <Form onSubmit={this.handleSubmit}>
                                 <Input type="string"
                                     name="image"
+                                    placeholder="Image URL"
                                     onChange={this.handleChange} />
                                 <Button>Add</Button>
                             </Form>
