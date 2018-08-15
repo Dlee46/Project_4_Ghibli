@@ -7,6 +7,9 @@ import styled from 'styled-components'
 
 const Background = styled.div`
 background-color: #f0f3f3;
+img{
+    height: 500px;
+}
 @media (max-width: 400px) {
 background-image: url('http://33.media.tumblr.com/8fc5ea349115e4c071f4a694aa1eedf9/tumblr_nj5r0xB8N51rm75fro2_500.gif');
 background-repeat: no-repeat;

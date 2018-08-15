@@ -16,9 +16,11 @@ opacity: 0.8;
 overflow: scroll;
 margin-top: 11%;
     }
-
 `
 const StyledCard = styled(Card)`
+img{
+    height: 150px !important;
+}
 &&&{
     @media (max-width: 400px) {
     width: 100%;
